@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Tier Filter Dropdown",
+  "Description": "Tier filter select list in the plan list toolbar",
+  "Type": "Element",
+  "TaxonomyType": "Dropdown",
+  "Id": "eBhG76DYS0mDNfFY7MruUw",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/eBhG76DYS0mDNfFY7MruUw",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:59:27.2775454Z",
+  "Updated": "2026-11-13T19:59:27.2775454Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

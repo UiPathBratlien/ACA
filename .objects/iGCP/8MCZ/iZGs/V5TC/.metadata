@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Applicant Age Input",
+  "Description": "Number input for age of oldest applicant on the About you step",
+  "Type": "Element",
+  "TaxonomyType": "None",
+  "Id": "V5TCxAsgM0-VgTpvKG9DzA",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/V5TCxAsgM0-VgTpvKG9DzA",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:57:47.5689848Z",
+  "Updated": "2026-11-13T19:57:47.5689848Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

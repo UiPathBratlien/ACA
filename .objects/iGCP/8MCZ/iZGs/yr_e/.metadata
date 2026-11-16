@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Confirmation Number Text",
+  "Description": "Enrollment confirmation number shown on the confirmation view",
+  "Type": "Element",
+  "TaxonomyType": "Label",
+  "Id": "yr_e8pUEz0-ctDZyoHCY3Q",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/yr_e8pUEz0-ctDZyoHCY3Q",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T20:02:41.442174Z",
+  "Updated": "2026-11-13T20:02:41.442174Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

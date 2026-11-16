@@ -1,0 +1,158 @@
+<Activity mc:Ignorable="sap2010" x:Class="CoverWellEnrollmentTest" sap2010:WorkflowViewState.IdRef="ActivityBuilder_1" xmlns:this="clr-namespace:" this:CoverWellEnrollmentTest.in_Scenario="Silver plan, household of 2" this:CoverWellEnrollmentTest.in_ZipCode="30301" this:CoverWellEnrollmentTest.in_HouseholdSizeItem="2 people" this:CoverWellEnrollmentTest.in_HouseholdSize="2" this:CoverWellEnrollmentTest.in_ApplicantAge="40" this:CoverWellEnrollmentTest.in_AnnualIncome="45000" this:CoverWellEnrollmentTest.in_PlanTier="Silver" this:CoverWellEnrollmentTest.in_PlanName="Northwind Health Silver Plus" this:CoverWellEnrollmentTest.in_FirstName="Jordan" this:CoverWellEnrollmentTest.in_LastName="Rivera" this:CoverWellEnrollmentTest.in_DobDisplayed="01/15/1990" this:CoverWellEnrollmentTest.in_DobIso="1990-01-15" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:s="clr-namespace:System;assembly=System.Private.CoreLib" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=System.Private.CoreLib" xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=System.Private.CoreLib" xmlns:sd="clr-namespace:System.Drawing;assembly=System.Drawing.Common" xmlns:sd1="clr-namespace:System.Drawing;assembly=System.Drawing.Primitives" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:uix="http://schemas.uipath.com/workflow/activities/uix" xmlns:uwah="clr-namespace:UiPath.Web.Activities.Http;assembly=UiPath.Web.Activities" xmlns:uwahm="clr-namespace:UiPath.Web.Activities.Http.Models;assembly=UiPath.Web.Activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="in_Scenario" Type="InArgument(x:String)" />
+    <x:Property Name="in_ZipCode" Type="InArgument(x:String)" />
+    <x:Property Name="in_HouseholdSizeItem" Type="InArgument(x:String)" />
+    <x:Property Name="in_HouseholdSize" Type="InArgument(x:String)" />
+    <x:Property Name="in_ApplicantAge" Type="InArgument(x:String)" />
+    <x:Property Name="in_AnnualIncome" Type="InArgument(x:String)" />
+    <x:Property Name="in_PlanTier" Type="InArgument(x:String)" />
+    <x:Property Name="in_PlanName" Type="InArgument(x:String)" />
+    <x:Property Name="in_FirstName" Type="InArgument(x:String)" />
+    <x:Property Name="in_LastName" Type="InArgument(x:String)" />
+    <x:Property Name="in_DobDisplayed" Type="InArgument(x:String)" />
+    <x:Property Name="in_DobIso" Type="InArgument(x:String)" />
+  </x:Members>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>UiPath.Web.Activities.Http</x:String>
+      <x:String>UiPath.Web.Activities.Http.Models</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>System.Private.CoreLib</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Linq</AssemblyReference>
+      <AssemblyReference>System.Net.Primitives</AssemblyReference>
+      <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>System.ObjectModel</AssemblyReference>
+      <AssemblyReference>netstandard</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.UIAutomationNext.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Web.Activities</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence DisplayName="CoverWell - Enroll and verify database record" sap2010:WorkflowViewState.IdRef="Sequence_1">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="x:String" Default="http://localhost:8080" Name="baseUrl" />
+      <Variable x:TypeArguments="x:String" Name="emailAddress" />
+      <Variable x:TypeArguments="x:String" Name="savingsText" />
+      <Variable x:TypeArguments="x:String" Name="uiPlanName" />
+      <Variable x:TypeArguments="x:String" Name="confirmationNumber" />
+      <Variable x:TypeArguments="uwahm:HttpResponseSummary" Name="resetResponse" />
+    </Sequence.Variables>
+    <Sequence DisplayName="Given - empty database and unique applicant email" sap2010:WorkflowViewState.IdRef="Sequence_2">
+      <uwah:NetHttpRequest BasicAuthPassword="{x:Null}" BasicAuthSecurePassword="{x:Null}" BasicAuthUsername="{x:Null}" BinaryPayload="{x:Null}" ClientCertPassword="{x:Null}" ClientCertPath="{x:Null}" ClientCertSecurePassword="{x:Null}" Cookies="{x:Null}" CustomNegotiatedAuthCredentials="{x:Null}" FilePath="{x:Null}" FormData="{x:Null}" FormDataParts="{x:Null}" Headers="{x:Null}" LocalFiles="{x:Null}" OAuthToken="{x:Null}" OutputFileName="{x:Null}" OutputFileTargetFolder="{x:Null}" Parameters="{x:Null}" PathResource="{x:Null}" ProxyConfiguration="{x:Null}" ResourceFiles="{x:Null}" RetryStatusCodes="{x:Null}" TextPayload="{x:Null}" AuthenticationType="None" ContinueOnError="False" DisableSslVerification="False" DisplayName="Reset database (DELETE /api/enrollments)" EnableCookies="True" FileOverwrite="AutoRename" FollowRedirects="True" sap2010:WorkflowViewState.IdRef="NetHttpRequest_1" InitialDelay="500" MaxRedirects="3" MaxRetryAfterDelay="30000" Method="DELETE" Multiplier="2" PreferRetryAfterValue="True" RequestBodyType="None" RequestUrl="[baseUrl &amp; &quot;/api/enrollments&quot;]" Result="[resetResponse]" RetryCount="3" RetryPolicyType="None" SaveRawRequestResponse="False" SaveResponseAsFile="False" TextPayloadContentType="application/json" TextPayloadEncoding="UTF-8" TlsProtocol="Automatic" UseJitter="True" UseOsNegotiatedAuthCredentials="True">
+        <uwah:NetHttpRequest.TimeoutInMiliseconds>
+          <InArgument x:TypeArguments="s:Nullable(x:Int32)">
+            <Literal x:TypeArguments="s:Nullable(x:Int32)" Value="10000" />
+          </InArgument>
+        </uwah:NetHttpRequest.TimeoutInMiliseconds>
+      </uwah:NetHttpRequest>
+      <If Condition="[CInt(resetResponse.StatusCode) &lt;&gt; 200]" DisplayName="If reset failed" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Then>
+          <Sequence DisplayName="Then" sap2010:WorkflowViewState.IdRef="Sequence_3">
+            <Throw DisplayName="Throw - CoverWell server not ready" Exception="[New InvalidOperationException(&quot;Could not reset the CoverWell database (HTTP &quot; &amp; CInt(resetResponse.StatusCode).ToString() &amp; &quot;). Start it with: python TestSite\server.py&quot;)]" sap2010:WorkflowViewState.IdRef="Throw_1" />
+          </Sequence>
+        </If.Then>
+      </If>
+      <Assign DisplayName="Assign unique email" sap2010:WorkflowViewState.IdRef="Assign_1">
+        <Assign.To>
+          <OutArgument x:TypeArguments="x:String">[emailAddress]</OutArgument>
+        </Assign.To>
+        <Assign.Value>
+          <InArgument x:TypeArguments="x:String">[in_FirstName.ToLower() &amp; "." &amp; in_LastName.ToLower() &amp; "+" &amp; DateTime.Now.ToString("yyyyMMddHHmmss") &amp; "@example.com"]</InArgument>
+        </Assign.Value>
+      </Assign>
+    </Sequence>
+    <Sequence DisplayName="When - enroll through the CoverWell site" sap2010:WorkflowViewState.IdRef="Sequence_4">
+      <uix:NApplicationCard AttachMode="ByInstance" CloseMode="Always" DisplayName="Use Browser CoverWell Marketplace" HealingAgentBehavior="Job" sap2010:WorkflowViewState.IdRef="NApplicationCard_1" InteractionMode="DebuggerApi" OpenMode="Always" ScopeGuid="30291866-413a-4217-abfc-f6bcd1567847" Version="V2" WindowResize="Maximize">
+        <uix:NApplicationCard.Body>
+          <ActivityAction x:TypeArguments="x:Object">
+            <ActivityAction.Argument>
+              <DelegateInArgument x:TypeArguments="x:Object" Name="WSSessionData" />
+            </ActivityAction.Argument>
+            <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_5">
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Enter household - Invoke Workflow File (CoverWell_EnterHousehold.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="Workflows\CoverWell_EnterHousehold.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ZipCode">[in_ZipCode]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_HouseholdSizeItem">[in_HouseholdSizeItem]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_ApplicantAge">[in_ApplicantAge]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_AnnualIncome">[in_AnnualIncome]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_SavingsText">[savingsText]</OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Select plan - Invoke Workflow File (CoverWell_SelectPlan.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="Workflows\CoverWell_SelectPlan.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_PlanTier">[in_PlanTier]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_PlanName">[in_PlanName]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_PlanName">[uiPlanName]</OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+              <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Submit enrollment - Invoke Workflow File (CoverWell_SubmitEnrollment.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_3" UnSafe="False" WorkflowFileName="Workflows\CoverWell_SubmitEnrollment.xaml">
+                <ui:InvokeWorkflowFile.Arguments>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_FirstName">[in_FirstName]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_LastName">[in_LastName]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_DateOfBirth">[in_DobDisplayed]</InArgument>
+                  <InArgument x:TypeArguments="x:String" x:Key="in_Email">[emailAddress]</InArgument>
+                  <OutArgument x:TypeArguments="x:String" x:Key="out_ConfirmationNumber">[confirmationNumber]</OutArgument>
+                </ui:InvokeWorkflowFile.Arguments>
+              </ui:InvokeWorkflowFile>
+            </Sequence>
+          </ActivityAction>
+        </uix:NApplicationCard.Body>
+        <uix:NApplicationCard.OCREngine>
+          <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd1:Rectangle, x:String))">
+            <ActivityFunc.Argument>
+              <DelegateInArgument x:TypeArguments="sd:Image" Name="Image" />
+            </ActivityFunc.Argument>
+          </ActivityFunc>
+        </uix:NApplicationCard.OCREngine>
+        <uix:NApplicationCard.TargetApp>
+          <uix:TargetApp Area="-8, -8, 1736, 1408" BrowserType="Edge" ContentHash="1h-RsuF5R0Goo_9jSJPH1g" InformativeScreenshot="b8ebce9fa6206b38d06f6c16f42994d2.jpg" Reference="4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA" Selector="&lt;html app='msedge.exe' title='CoverWell Marketplace' url='http://localhost:8080/*' /&gt;" Url="http://localhost:8080/" Version="V3">
+            <uix:TargetApp.SapInfo>
+              <uix:SAPElementInfo IsSapSubsystem="False" WebAutomationFramework="Default" />
+            </uix:TargetApp.SapInfo>
+          </uix:TargetApp>
+        </uix:NApplicationCard.TargetApp>
+      </uix:NApplicationCard>
+      <ui:LogMessage DisplayName="Log confirmation number" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;[&quot; &amp; in_Scenario &amp; &quot;] Enrollment submitted. Confirmation number: &quot; &amp; confirmationNumber]" />
+    </Sequence>
+    <Sequence DisplayName="Then - database record matches the enrollment" sap2010:WorkflowViewState.IdRef="Sequence_6">
+      <ui:InvokeWorkflowFile ArgumentsVariable="{x:Null}" DisplayName="Verify record - Invoke Workflow File (CoverWell_VerifyEnrollmentRecord.xaml)" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_4" UnSafe="False" WorkflowFileName="Workflows\CoverWell_VerifyEnrollmentRecord.xaml">
+        <ui:InvokeWorkflowFile.Arguments>
+          <InArgument x:TypeArguments="x:String" x:Key="in_BaseUrl">[baseUrl]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_ConfirmationNumber">[confirmationNumber]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_FirstName">[in_FirstName]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_LastName">[in_LastName]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_DobIso">[in_DobIso]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_Email">[emailAddress]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_ZipCode">[in_ZipCode]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_HouseholdSize">[CInt(in_HouseholdSize)]</InArgument>
+          <InArgument x:TypeArguments="x:Int32" x:Key="in_ApplicantAge">[CInt(in_ApplicantAge)]</InArgument>
+          <InArgument x:TypeArguments="x:Double" x:Key="in_AnnualIncome">[CDbl(in_AnnualIncome)]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_SavingsText">[savingsText]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_UiPlanName">[uiPlanName]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_ExpectedPlanName">[in_PlanName]</InArgument>
+          <InArgument x:TypeArguments="x:String" x:Key="in_PlanTier">[in_PlanTier]</InArgument>
+        </ui:InvokeWorkflowFile.Arguments>
+      </ui:InvokeWorkflowFile>
+    </Sequence>
+  </Sequence>
+</Activity>

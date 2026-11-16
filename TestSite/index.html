@@ -1,0 +1,571 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoverWell Marketplace</title>
+<style>
+  /* Visual language modeled on the U.S. Web Design System (USWDS) used by healthcare.gov */
+  :root {
+    --primary:#0071bc; --primary-dark:#205493; --primary-darkest:#112e51; --primary-alt:#02bfe7;
+    --primary-lightest:#e1f3f8; --gold:#fdb81e; --gold-light:#fad980; --green:#2e8540; --green-lightest:#e7f4e4;
+    --red:#e31c3d; --bg:#ffffff; --bg-alt:#f1f1f1; --text:#212121; --muted:#5b616b; --border:#aeb0b5;
+    --border-light:#d6d7d9; --card:#ffffff; --focus:#3e94cf; --radius:5px;
+    --sans:"Source Sans Pro","Source Sans 3","Segoe UI",Helvetica,Arial,sans-serif;
+    --serif:Merriweather,Georgia,Cambria,"Times New Roman",serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#111a24; --bg-alt:#18232f; --text:#eef1f4; --muted:#a9b4bf; --border:#5b6875; --border-light:#2c3a48;
+      --card:#1b2733; --primary:#4aa3df; --primary-dark:#2f86c4; --primary-lightest:#16314a; --green-lightest:#183322; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:var(--sans); font-size:17px; background:var(--bg); color:var(--text); line-height:1.55; }
+  a { color:var(--primary); }
+  a:focus, button:focus, input:focus, select:focus, summary:focus { outline:3px solid var(--focus); outline-offset:2px; }
+  h1, h2, h3 { font-family:var(--serif); font-weight:700; line-height:1.25; }
+  .wrap { max-width:1140px; margin:0 auto; padding:0 16px; }
+
+  /* Demo notice (stands where a site-wide banner would go) */
+  .demo-banner { background:var(--bg-alt); color:var(--muted); font-size:13px; padding:5px 0; border-bottom:1px solid var(--border-light); }
+  .demo-banner .wrap { display:flex; align-items:center; gap:8px; }
+  .demo-banner .flag { width:16px; height:11px; border-radius:2px; background:linear-gradient(var(--primary) 0 50%, var(--gold) 50%); flex:none; }
+
+  /* Header: white identity row + navy navigation bar */
+  header { background:var(--bg); position:sticky; top:0; z-index:5; box-shadow:0 1px 3px rgba(0,0,0,.15); }
+  .header-top .wrap { display:flex; align-items:center; justify-content:space-between; gap:16px; height:72px; }
+  .logo { font-family:var(--serif); font-weight:700; font-size:26px; color:var(--primary-darkest); text-decoration:none; display:flex; align-items:center; gap:10px; letter-spacing:-.3px; }
+  .logo .dot { color:var(--primary); }
+  .logo span.mark { width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; display:grid; place-items:center; font-size:22px; font-family:var(--sans); box-shadow:inset 0 0 0 3px var(--primary-alt); }
+  .utility { display:flex; align-items:center; gap:18px; font-size:15px; }
+  .utility a { text-decoration:none; }
+  .utility .lang { color:var(--primary); font-weight:600; }
+  .navbar { background:var(--primary-darkest); }
+  .navbar .wrap { display:flex; align-items:stretch; }
+  nav a { display:inline-block; padding:13px 18px; text-decoration:none; color:#fff; font-weight:600; font-size:16px; border-bottom:4px solid transparent; }
+  nav a:hover { background:var(--primary-dark); border-bottom-color:var(--primary-alt); }
+
+  /* Buttons (USWDS style) */
+  .btn { display:inline-block; border:0; border-radius:var(--radius); padding:13px 24px; font-family:var(--sans); font-size:17px; font-weight:700; cursor:pointer; text-decoration:none; line-height:1.2; }
+  .btn-primary { background:var(--primary); color:#fff; }
+  .btn-primary:hover { background:var(--primary-dark); }
+  .btn-primary:disabled { background:#aeb0b5; cursor:default; }
+  .btn-accent { background:var(--green); color:#fff; }
+  .btn-accent:hover { background:#256b34; }
+  .btn-outline { background:transparent; color:var(--primary); box-shadow:inset 0 0 0 2px var(--primary); }
+  .btn-outline:hover { color:var(--primary-dark); box-shadow:inset 0 0 0 2px var(--primary-dark); }
+  .btn-login { padding:8px 18px; font-size:15px; }
+
+  /* Hero */
+  .hero { background:var(--primary-darkest); color:#fff; position:relative; overflow:hidden; }
+  .hero::after { content:""; position:absolute; right:-120px; top:-80px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle, rgba(2,191,231,.35), rgba(2,191,231,0) 70%); }
+  .hero .wrap { display:grid; grid-template-columns:1.2fr 1fr; gap:40px; align-items:center; padding-top:56px; padding-bottom:56px; position:relative; z-index:1; }
+  .hero .eyebrow { display:inline-block; background:var(--gold); color:var(--primary-darkest); font-weight:700; font-size:14px; text-transform:uppercase; letter-spacing:.5px; padding:4px 10px; border-radius:3px; margin-bottom:16px; }
+  .hero h1 { font-size:44px; margin:0 0 16px; }
+  .hero p { font-size:20px; margin:0 0 20px; max-width:560px; color:#dce4ef; }
+  .hero .deadline-strip { font-size:16px; color:#fff; border-left:4px solid var(--gold); padding-left:12px; }
+  .zip-card { background:var(--card); color:var(--text); border-radius:var(--radius); padding:28px; border-top:8px solid var(--gold); box-shadow:0 8px 24px rgba(0,0,0,.3); }
+  .zip-card h2 { font-size:24px; margin:0 0 6px; }
+  .zip-card p { color:var(--muted); font-size:16px; margin:0 0 16px; }
+  .zip-form { display:flex; gap:8px; flex-wrap:wrap; }
+  .zip-form input { flex:1; min-width:160px; padding:12px; font-size:18px; border-radius:0; border:1px solid var(--text); background:var(--bg); color:var(--text); }
+  .zip-card .error { color:var(--red); }
+  .zip-card .small { font-size:14px; margin:12px 0 0; }
+
+  /* Deadline / alert band */
+  .alert-band { background:var(--gold-light); color:#212121; }
+  .alert-band .wrap { display:flex; align-items:center; gap:14px; padding-top:14px; padding-bottom:14px; font-size:17px; }
+  .alert-band .icon { width:28px; height:28px; border-radius:50%; background:#212121; color:var(--gold-light); display:grid; place-items:center; font-weight:700; flex:none; font-family:var(--serif); }
+
+  section { padding:56px 0; }
+  section.alt { background:var(--bg-alt); }
+  section.blue { background:var(--primary-lightest); }
+  h2 { font-size:30px; margin:0 0 20px; }
+  .lead { font-size:20px; color:var(--muted); margin:-8px 0 28px; max-width:720px; }
+  .grid { display:grid; gap:24px; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); }
+  .card { background:var(--card); border:1px solid var(--border-light); border-radius:var(--radius); padding:24px; }
+  .card h3 { margin:0 0 8px; font-size:19px; }
+  .card p { margin:0; color:var(--muted); }
+  .step-card { border-top:6px solid var(--primary); }
+  .step-card .n { width:40px; height:40px; border-radius:50%; background:var(--primary-lightest); color:var(--primary-darkest); display:grid; place-items:center; font-weight:700; font-size:20px; margin-bottom:12px; }
+  .dates { list-style:none; padding:0; margin:0; display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); }
+  .dates li { background:var(--card); border-left:6px solid var(--primary); padding:16px 20px; border-radius:0 var(--radius) var(--radius) 0; }
+  .dates li strong { display:block; font-family:var(--serif); font-size:20px; color:var(--primary-darkest); }
+  @media (prefers-color-scheme: dark) { .dates li strong, .step-card .n { color:var(--text); } .logo { color:var(--text); } }
+  .dates li.sep { grid-column:1/-1; border-left-color:var(--green); }
+  details { border:0; border-bottom:1px solid var(--border-light); padding:0; margin:0; background:transparent; }
+  details:first-of-type { border-top:1px solid var(--border-light); }
+  summary { cursor:pointer; font-weight:700; padding:16px 20px; background:var(--bg-alt); list-style:none; display:flex; justify-content:space-between; color:var(--primary-darkest); }
+  @media (prefers-color-scheme: dark) { summary { color:var(--text); } }
+  summary::after { content:"+"; font-size:22px; line-height:1; color:var(--primary); }
+  details[open] summary::after { content:"\2013"; }
+  summary::-webkit-details-marker { display:none; }
+  details p { padding:4px 20px 12px; margin:12px 0; }
+
+  footer { font-size:15px; }
+  .footer-top { background:var(--bg-alt); padding:20px 0; border-top:1px solid var(--border-light); }
+  .footer-top a { margin-right:24px; font-weight:600; }
+  .footer-main { background:var(--primary-darkest); color:#dce4ef; padding:36px 0; }
+  .footer-main .wrap { display:grid; grid-template-columns:2fr 1fr 1fr; gap:24px; }
+  .footer-main h4 { color:#fff; margin:0 0 8px; font-size:16px; }
+  .footer-main a { color:#dce4ef; display:block; margin-bottom:6px; text-decoration:none; }
+  .footer-main a:hover { text-decoration:underline; }
+  .footer-main .logo { color:#fff; font-size:22px; margin-bottom:8px; }
+
+  /* Wizard */
+  .view { display:none; }
+  .view.active { display:block; }
+  .steps { display:flex; gap:4px; margin-bottom:32px; counter-reset:step; }
+  .steps div { flex:1; padding-top:14px; border-top:8px solid var(--border-light); color:var(--muted); font-size:16px; counter-increment:step; }
+  .steps div::before { content:counter(step); display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%; margin-right:8px; background:var(--bg); box-shadow:inset 0 0 0 2px var(--border); font-weight:700; font-size:14px; }
+  .steps div.done { border-color:var(--primary-darkest); color:var(--text); }
+  .steps div.done::before { content:"\2713"; background:var(--primary-darkest); color:#fff; box-shadow:none; }
+  .steps div.current { border-color:var(--primary); color:var(--primary); font-weight:700; }
+  .steps div.current::before { background:var(--primary); color:#fff; box-shadow:none; }
+  .form-card { max-width:680px; border-top:6px solid var(--primary); }
+  .form-card h2 { font-size:28px; }
+  label { display:block; font-weight:700; margin:20px 0 6px; }
+  input[type=text], input[type=number], input[type=email], input[type=date], select {
+    width:100%; max-width:460px; padding:10px 12px; font-size:17px; font-family:var(--sans); border:1px solid var(--text); border-radius:0; background:var(--bg); color:var(--text); height:46px;
+  }
+  input[type=radio], input[type=checkbox] { width:20px; height:20px; accent-color:var(--primary); }
+  .radio-row { display:flex; gap:24px; flex-wrap:wrap; }
+  .radio-row label { font-weight:400; margin:0; display:flex; align-items:center; gap:8px; }
+  form > label:has(input[type=checkbox]) { font-weight:400; display:flex; align-items:center; gap:10px; margin-top:24px; }
+  .error { color:var(--red); font-size:16px; font-weight:600; margin-top:8px; min-height:22px; }
+  .actions { margin-top:28px; display:flex; gap:12px; flex-wrap:wrap; }
+  .savings { background:var(--green-lightest); color:var(--text); border-left:8px solid var(--green); padding:18px 20px; margin-bottom:20px; font-size:19px; }
+  .savings strong { color:var(--green); font-size:22px; }
+  @media (prefers-color-scheme: dark) { .savings strong { color:#7fd38f; } }
+  .toolbar { display:flex; gap:20px; flex-wrap:wrap; align-items:end; margin-bottom:20px; padding:16px 20px; background:var(--bg-alt); border-radius:var(--radius); }
+  .toolbar > div { min-width:200px; }
+  .toolbar label { margin-top:0; }
+  .plan { display:grid; grid-template-columns:1fr auto; gap:16px; align-items:center; border-left:6px solid var(--primary); }
+  .plan + .plan { margin-top:16px; }
+  .plan .carrier { color:var(--muted); font-size:15px; margin-bottom:4px; }
+  .plan-name { font-family:var(--serif); font-size:20px; color:var(--primary-darkest); }
+  @media (prefers-color-scheme: dark) { .plan-name { color:var(--text); } }
+  .tier { display:inline-block; font-size:13px; font-weight:700; padding:2px 10px; border-radius:3px; margin-right:8px; text-transform:uppercase; letter-spacing:.4px; vertical-align:middle; }
+  .tier.Bronze { background:#e7c9a9; color:#5a3610; } .tier.Silver { background:#dde3e8; color:#33414d; }
+  .tier.Gold { background:#f6e3a1; color:#5c4700; } .tier.Platinum { background:#d9d3f2; color:#352a6b; }
+  .plan-stats { display:flex; gap:28px; flex-wrap:wrap; margin-top:12px; }
+  .plan-stats div { font-size:14px; color:var(--muted); }
+  .plan-stats b { display:block; font-size:18px; color:var(--text); }
+  .price { text-align:right; margin-bottom:10px; }
+  .price .label { display:block; font-size:14px; color:var(--muted); }
+  .price .amt { font-size:30px; font-weight:700; color:var(--text); }
+  .price small { display:block; font-size:14px; color:var(--muted); }
+  .plan-meta { color:var(--muted); font-size:14px; margin-top:4px; }
+  .confirm { text-align:center; padding:40px 0; }
+  .confirm .check { width:72px; height:72px; border-radius:50%; background:var(--green); color:#fff; display:grid; place-items:center; font-size:40px; margin:0 auto 16px; }
+  .confirm .num { display:inline-block; font-size:30px; font-weight:700; letter-spacing:3px; color:var(--primary-darkest); background:var(--primary-lightest); padding:10px 24px; border-radius:var(--radius); margin:4px 0 12px; }
+  @media (prefers-color-scheme: dark) { .confirm .num { color:var(--text); } }
+  @media (max-width:800px) {
+    .hero .wrap { grid-template-columns:1fr; } .hero h1 { font-size:32px; }
+    .footer-main .wrap { grid-template-columns:1fr; }
+  }
+  @media (max-width:640px) {
+    .navbar { display:none; } .utility .lang { display:none; }
+    .plan { grid-template-columns:1fr; } .price { text-align:left; }
+    .steps div { font-size:0; } .steps div::before { font-size:14px; }
+  }
+</style>
+</head>
+<body>
+<div class="demo-banner"><div class="wrap"><span class="flag" aria-hidden="true"></span>Demo site for testing &mdash; not a real insurance marketplace. No data leaves this computer.</div></div>
+
+<header>
+  <div class="header-top">
+    <div class="wrap">
+      <a href="#" class="logo" id="nav-home" data-view="home"><span class="mark">+</span>CoverWell<span class="dot">.</span></a>
+      <div class="utility">
+        <a href="#" class="lang" data-view="home">Español</a>
+        <a href="#" id="nav-login" class="btn btn-outline btn-login" data-view="login">Log in</a>
+      </div>
+    </div>
+  </div>
+  <div class="navbar">
+    <div class="wrap">
+      <nav aria-label="Main">
+        <a href="#" id="nav-plans" data-view="step1">See plans &amp; prices</a>
+        <a href="#dates" id="nav-dates" data-view="home">Key dates</a>
+        <a href="#how" id="nav-how" data-view="home">How it works</a>
+        <a href="#faq" id="nav-faq" data-view="home">Get answers</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- HOME -->
+<div class="view active" id="view-home">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">Open Enrollment is here</span>
+        <h1>Get covered. Find a health plan that fits your budget.</h1>
+        <p>Most people can find a plan for $10 or less a month after savings. Compare plans and enroll in minutes.</p>
+        <div class="deadline-strip">Open Enrollment: <strong>November 1 &ndash; January 15</strong></div>
+      </div>
+      <div class="zip-card">
+        <h2>See plans &amp; prices</h2>
+        <p>Enter your ZIP code to preview plans and estimate your savings.</p>
+        <form class="zip-form" id="hero-form" novalidate>
+          <input type="text" id="hero-zip" inputmode="numeric" maxlength="5" placeholder="ZIP code" aria-label="ZIP code">
+          <button type="submit" class="btn btn-accent" id="hero-submit">See plans &amp; prices</button>
+        </form>
+        <div class="error" id="hero-error"></div>
+        <p class="small">Already have an account? <a href="#" data-view="login">Log in</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="alert-band">
+    <div class="wrap"><span class="icon" aria-hidden="true">!</span><span><strong>Enroll by December 15</strong> for coverage that starts January 1.</span></div>
+  </div>
+
+  <section id="how">
+    <div class="wrap">
+      <h2>How it works</h2>
+      <p class="lead">Four steps from ZIP code to confirmation number.</p>
+      <div class="grid">
+        <div class="card step-card"><div class="n">1</div><h3>Tell us about you</h3><p>ZIP code, household size and estimated income.</p></div>
+        <div class="card step-card"><div class="n">2</div><h3>See your savings</h3><p>We estimate a monthly premium credit you may qualify for.</p></div>
+        <div class="card step-card"><div class="n">3</div><h3>Compare plans</h3><p>Filter by tier, premium and deductible side by side.</p></div>
+        <div class="card step-card"><div class="n">4</div><h3>Enroll</h3><p>Pick a plan, add your details and get a confirmation number.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blue" id="dates">
+    <div class="wrap">
+      <h2>Key dates</h2>
+      <ul class="dates">
+        <li><strong>November 1</strong>Open Enrollment starts</li>
+        <li><strong>December 15</strong>Enroll by this date for coverage starting January 1</li>
+        <li><strong>January 15</strong>Open Enrollment ends</li>
+        <li class="sep">Had a life change (move, new baby, lost coverage)? You may qualify for a <b>Special Enrollment Period</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Get answers</h2>
+      <details><summary>What are the plan tiers?</summary><p>Bronze plans have the lowest premiums and highest out-of-pocket costs. Platinum plans have the highest premiums and lowest out-of-pocket costs. Silver and Gold are in between.</p></details>
+      <details><summary>What's a premium vs. a deductible?</summary><p>A premium is what you pay each month for coverage. A deductible is what you pay for care before your plan starts paying.</p></details>
+      <details><summary>How is my savings estimate calculated?</summary><p>On this demo site, savings are a simplified illustration based on household size and income. They are not real eligibility results.</p></details>
+      <details><summary>Can I change plans later?</summary><p>You can change plans during Open Enrollment, or after a qualifying life event.</p></details>
+    </div>
+  </section>
+</div>
+
+<!-- STEP 1: About you -->
+<div class="view" id="view-step1">
+  <section><div class="wrap">
+    <div class="steps"><div class="current">About you</div><div>Savings</div><div>Plans</div><div>Enroll</div></div>
+    <div class="card form-card">
+      <h2>Tell us about your household</h2>
+      <form id="form-household" novalidate>
+        <label for="hh-zip">ZIP code</label>
+        <input type="text" id="hh-zip" inputmode="numeric" maxlength="5">
+        <label for="hh-size">Household size</label>
+        <select id="hh-size">
+          <option value="1">1 person</option><option value="2">2 people</option><option value="3">3 people</option>
+          <option value="4">4 people</option><option value="5">5 people</option><option value="6">6+ people</option>
+        </select>
+        <label for="hh-age">Age of oldest applicant</label>
+        <input type="number" id="hh-age" min="18" max="64" value="35">
+        <label for="hh-income">Estimated annual household income ($)</label>
+        <input type="number" id="hh-income" min="0" step="1000" placeholder="e.g. 45000">
+        <label>Does anyone use tobacco?</label>
+        <div class="radio-row">
+          <label><input type="radio" name="tobacco" id="tobacco-no" value="no" checked> No</label>
+          <label><input type="radio" name="tobacco" id="tobacco-yes" value="yes"> Yes</label>
+        </div>
+        <div class="error" id="hh-error"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="step1-back" data-view="home">Back</button>
+          <button type="submit" class="btn btn-primary" id="step1-next">Continue</button>
+        </div>
+      </form>
+    </div>
+  </div></section>
+</div>
+
+<!-- STEP 2: Savings -->
+<div class="view" id="view-step2">
+  <section><div class="wrap">
+    <div class="steps"><div class="done">About you</div><div class="current">Savings</div><div>Plans</div><div>Enroll</div></div>
+    <div class="card form-card">
+      <h2>Your estimated savings</h2>
+      <div class="savings" id="savings-box"></div>
+      <p id="savings-detail" style="color:var(--muted)"></p>
+      <div class="actions">
+        <button type="button" class="btn btn-outline" id="step2-back" data-view="step1">Back</button>
+        <button type="button" class="btn btn-primary" id="step2-next">View plans</button>
+      </div>
+    </div>
+  </div></section>
+</div>
+
+<!-- STEP 3: Plans -->
+<div class="view" id="view-step3">
+  <section><div class="wrap">
+    <div class="steps"><div class="done">About you</div><div class="done">Savings</div><div class="current">Plans</div><div>Enroll</div></div>
+    <h2>Plans available in <span id="plans-zip"></span></h2>
+    <div class="toolbar">
+      <div><label for="filter-tier">Tier</label>
+        <select id="filter-tier"><option value="all">All tiers</option><option>Bronze</option><option>Silver</option><option>Gold</option><option>Platinum</option></select></div>
+      <div><label for="sort-by">Sort by</label>
+        <select id="sort-by"><option value="premium">Lowest premium</option><option value="deductible">Lowest deductible</option><option value="rating">Highest rating</option></select></div>
+      <div style="align-self:end;color:var(--muted)" id="plan-count"></div>
+    </div>
+    <div id="plan-list"></div>
+    <div class="actions"><button type="button" class="btn btn-outline" id="step3-back" data-view="step2">Back</button></div>
+  </div></section>
+</div>
+
+<!-- STEP 4: Enroll -->
+<div class="view" id="view-step4">
+  <section><div class="wrap">
+    <div class="steps"><div class="done">About you</div><div class="done">Savings</div><div class="done">Plans</div><div class="current">Enroll</div></div>
+    <div class="card form-card">
+      <h2>Enroll in <span id="enroll-plan-name"></span></h2>
+      <p id="enroll-plan-price" style="color:var(--muted)"></p>
+      <form id="form-enroll" novalidate>
+        <label for="en-first">First name</label><input type="text" id="en-first" autocomplete="given-name">
+        <label for="en-last">Last name</label><input type="text" id="en-last" autocomplete="family-name">
+        <label for="en-dob">Date of birth</label><input type="date" id="en-dob">
+        <label for="en-email">Email</label><input type="email" id="en-email" autocomplete="email">
+        <label><input type="checkbox" id="en-agree"> I confirm the information above is accurate.</label>
+        <div class="error" id="en-error"></div>
+        <div class="actions">
+          <button type="button" class="btn btn-outline" id="step4-back" data-view="step3">Back</button>
+          <button type="submit" class="btn btn-primary" id="enroll-submit">Submit enrollment</button>
+        </div>
+      </form>
+    </div>
+  </div></section>
+</div>
+
+<!-- CONFIRMATION -->
+<div class="view" id="view-confirm">
+  <section><div class="wrap confirm">
+    <div class="check" aria-hidden="true">&#10003;</div>
+    <h2>You're enrolled!</h2>
+    <p>Your confirmation number is</p>
+    <div class="num" id="confirm-number"></div>
+    <p id="confirm-summary"></p>
+    <button type="button" class="btn btn-primary" id="confirm-home" data-view="home">Back to home</button>
+  </div></section>
+</div>
+
+<!-- LOGIN -->
+<div class="view" id="view-login">
+  <section><div class="wrap">
+    <div class="card form-card">
+      <h2>Log in</h2>
+      <form id="form-login" novalidate>
+        <label for="login-user">Username</label><input type="text" id="login-user" autocomplete="username">
+        <label for="login-pass">Password</label><input type="text" id="login-pass" style="-webkit-text-security:disc" autocomplete="off">
+        <div class="error" id="login-error"></div>
+        <div class="actions"><button type="submit" class="btn btn-primary" id="login-submit">Log in</button></div>
+      </form>
+      <p style="color:var(--muted);font-size:14px">Demo: any username works with password <code>demo123</code>.</p>
+    </div>
+  </div></section>
+</div>
+</main>
+
+<footer>
+  <div class="footer-top">
+    <div class="wrap"><a href="#" data-view="home">Return to top</a></div>
+  </div>
+  <div class="footer-main">
+    <div class="wrap">
+      <div>
+        <div class="logo"><span class="mark">+</span>CoverWell</div>
+        <p>CoverWell Marketplace is a fictional demo site for UI test automation. Plans, prices and savings are illustrative only.</p>
+      </div>
+      <div>
+        <h4>Get coverage</h4>
+        <a href="#" data-view="step1">See plans &amp; prices</a>
+        <a href="#dates" data-view="home">Key dates</a>
+        <a href="#faq" data-view="home">Help</a>
+      </div>
+      <div>
+        <h4>Account</h4>
+        <a href="#" data-view="login">Log in</a>
+        <a href="admin.html" id="footer-admin">Admin: enrollment records</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+const state = { zip:"", size:1, age:35, income:0, tobacco:false, credit:0, plan:null, user:null };
+
+function show(view) {
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("active", v.id === "view-" + view));
+  window.scrollTo(0, 0);
+}
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-view]");
+  if (!el) return;
+  const href = el.getAttribute("href") || "";
+  if (el.dataset.view === "step1") document.getElementById("hh-zip").value = state.zip;
+  show(el.dataset.view);
+  if (href.startsWith("#") && href.length > 1) { e.preventDefault(); document.querySelector(href)?.scrollIntoView(); }
+  else e.preventDefault();
+});
+
+const validZip = z => /^\d{5}$/.test(z);
+
+// Hero ZIP
+document.getElementById("hero-form").addEventListener("submit", e => {
+  e.preventDefault();
+  const z = document.getElementById("hero-zip").value.trim();
+  const err = document.getElementById("hero-error");
+  if (!validZip(z)) { err.textContent = "Please enter a valid 5-digit ZIP code."; return; }
+  err.textContent = ""; state.zip = z;
+  document.getElementById("hh-zip").value = z;
+  show("step1");
+});
+
+// Step 1
+document.getElementById("form-household").addEventListener("submit", e => {
+  e.preventDefault();
+  const err = document.getElementById("hh-error");
+  const zip = document.getElementById("hh-zip").value.trim();
+  const age = parseInt(document.getElementById("hh-age").value, 10);
+  const income = parseFloat(document.getElementById("hh-income").value);
+  if (!validZip(zip)) return err.textContent = "Please enter a valid 5-digit ZIP code.";
+  if (!(age >= 18 && age <= 64)) return err.textContent = "Age must be between 18 and 64.";
+  if (!(income >= 0)) return err.textContent = "Please enter your estimated annual income.";
+  err.textContent = "";
+  Object.assign(state, { zip, age, income, size: parseInt(document.getElementById("hh-size").value, 10),
+    tobacco: document.getElementById("tobacco-yes").checked });
+
+  // Simplified illustrative savings: compare income to a per-person baseline
+  const baseline = 15000 + 5400 * (state.size - 1);
+  const pct = income / baseline * 100;
+  let credit = 0;
+  if (pct < 400) credit = Math.round((400 - pct) * 1.2 + 60 * state.size);
+  else if (pct < 600) credit = Math.round(40 * state.size);
+  state.credit = credit;
+
+  document.getElementById("savings-box").innerHTML = credit > 0
+    ? `You may qualify for a premium credit of <strong id="savings-amount">$${credit}/month</strong>.`
+    : `<strong id="savings-amount">$0/month</strong> &mdash; based on your income, you may not qualify for a premium credit, but you can still buy a plan.`;
+  document.getElementById("savings-detail").textContent =
+    `Household of ${state.size}, income $${income.toLocaleString()} (${Math.round(pct)}% of the demo baseline). Illustrative estimate only.`;
+  show("step2");
+});
+
+// Plans
+const carriers = ["Northwind Health", "BlueRiver Care", "Summit Mutual", "Evergreen Health"];
+const tiers = [
+  { t:"Bronze", base:310, ded:7200, oop:9400 }, { t:"Silver", base:420, ded:4500, oop:8200 },
+  { t:"Gold", base:520, ded:1500, oop:6500 },   { t:"Platinum", base:640, ded:250, oop:3500 }
+];
+function buildPlans() {
+  const seed = parseInt(state.zip, 10) || 1;
+  const ageFactor = 1 + (state.age - 21) * 0.02;
+  const tob = state.tobacco ? 1.15 : 1;
+  const plans = [];
+  let n = 0;
+  carriers.forEach((c, ci) => tiers.forEach((tr, ti) => {
+    const jitter = ((seed * (ci + 3) * (ti + 7)) % 60) - 30;
+    const full = Math.round((tr.base + jitter) * ageFactor * tob * (0.6 + 0.4 * state.size));
+    plans.push({ id: "plan-" + (++n), name: `${c} ${tr.t} ${["Value","Plus","Select","Choice"][(ci+ti)%4]}`,
+      carrier: c, tier: tr.t, full, premium: Math.max(0, full - state.credit),
+      deductible: tr.ded + ((jitter * 20) | 0), oop: tr.oop, rating: 2 + ((seed + ci * 3 + ti) % 4) });
+  }));
+  return plans;
+}
+function renderPlans() {
+  const tier = document.getElementById("filter-tier").value;
+  const sort = document.getElementById("sort-by").value;
+  let list = buildPlans().filter(p => tier === "all" || p.tier === tier);
+  list.sort((a, b) => sort === "rating" ? b.rating - a.rating : a[sort] - b[sort]);
+  document.getElementById("plan-count").textContent = `${list.length} plans`;
+  document.getElementById("plans-zip").textContent = state.zip;
+  document.getElementById("plan-list").innerHTML = list.map(p => `
+    <div class="card plan" id="${p.id}">
+      <div>
+        <div class="carrier">${p.carrier}</div>
+        <span class="tier ${p.tier}">${p.tier}</span><strong class="plan-name">${p.name}</strong>
+        <div class="plan-stats">
+          <div><b>$${p.deductible.toLocaleString()}</b>Deductible</div>
+          <div><b>$${p.oop.toLocaleString()}</b>Out-of-pocket max</div>
+          <div><b>${"★".repeat(p.rating)}${"☆".repeat(5 - p.rating)}</b>Quality rating</div>
+        </div>
+      </div>
+      <div>
+        <div class="price"><span class="label">Estimated monthly premium</span><span class="amt"><span class="plan-premium">$${p.premium}</span></span>/mo<small>Was $${p.full}</small></div>
+        <button class="btn btn-primary select-plan" data-plan="${p.id}" data-plan-name="${p.name}" aria-label="Select ${p.name}" id="select-${p.id}">Select plan</button>
+      </div>
+    </div>`).join("");
+  window._plans = list;
+}
+document.getElementById("step2-next").addEventListener("click", () => { renderPlans(); show("step3"); });
+document.getElementById("filter-tier").addEventListener("change", renderPlans);
+document.getElementById("sort-by").addEventListener("change", renderPlans);
+document.getElementById("plan-list").addEventListener("click", e => {
+  const b = e.target.closest(".select-plan"); if (!b) return;
+  state.plan = window._plans.find(p => p.id === b.dataset.plan);
+  document.getElementById("enroll-plan-name").textContent = state.plan.name;
+  document.getElementById("enroll-plan-price").textContent = `$${state.plan.premium}/month after savings`;
+  show("step4");
+});
+
+// Enroll
+document.getElementById("form-enroll").addEventListener("submit", e => {
+  e.preventDefault();
+  const err = document.getElementById("en-error");
+  const f = document.getElementById("en-first").value.trim(), l = document.getElementById("en-last").value.trim();
+  const dob = document.getElementById("en-dob").value, email = document.getElementById("en-email").value.trim();
+  if (!f || !l) return err.textContent = "Please enter your first and last name.";
+  if (!dob) return err.textContent = "Please enter your date of birth.";
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return err.textContent = "Please enter a valid email address.";
+  if (!document.getElementById("en-agree").checked) return err.textContent = "Please confirm your information is accurate.";
+  err.textContent = "";
+  const btn = document.getElementById("enroll-submit");
+  btn.disabled = true; btn.textContent = "Submitting…";
+  const p = state.plan;
+  fetch("/api/enrollments", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      first_name: f, last_name: l, dob, email, zip: state.zip, household_size: state.size, age: state.age,
+      income: state.income, tobacco: state.tobacco, monthly_credit: state.credit,
+      plan_id: p.id, plan_name: p.name, plan_tier: p.tier, carrier: p.carrier,
+      monthly_premium: p.premium, full_premium: p.full, deductible: p.deductible
+    })
+  }).then(async r => {
+    const rec = await r.json();
+    if (!r.ok) throw new Error(rec.error || "Server error");
+    document.getElementById("confirm-number").textContent = rec.confirmation;
+    document.getElementById("confirm-summary").textContent =
+      `${f} ${l} is enrolled in ${p.name} at $${p.premium}/month. A confirmation was "sent" to ${email}.`;
+    document.getElementById("form-enroll").reset();
+    show("confirm");
+  }).catch(ex => {
+    err.textContent = location.protocol === "file:"
+      ? "Can't save: open the site through the server (python server.py, then http://localhost:8080)."
+      : "Enrollment could not be saved: " + ex.message;
+  }).finally(() => { btn.disabled = false; btn.textContent = "Submit enrollment"; });
+});
+
+// Login
+document.getElementById("form-login").addEventListener("submit", e => {
+  e.preventDefault();
+  const u = document.getElementById("login-user").value.trim(), p = document.getElementById("login-pass").value;
+  const err = document.getElementById("login-error");
+  if (!u || p !== "demo123") return err.textContent = "Invalid username or password.";
+  err.textContent = ""; state.user = u;
+  const nl = document.getElementById("nav-login"); nl.textContent = "Hi, " + u; nl.dataset.view = "home";
+  show("home");
+});
+</script>
+</body>
+</html>

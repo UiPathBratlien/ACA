@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Date Of Birth Input",
+  "Description": "Native date input for date of birth on the Enroll form",
+  "Type": "Element",
+  "TaxonomyType": "Input",
+  "Id": "ODb2ucK2GkK3uEvFZsWnSQ",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/ODb2ucK2GkK3uEvFZsWnSQ",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T20:01:14.5729681Z",
+  "Updated": "2026-11-13T20:01:14.5729681Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

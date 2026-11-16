@@ -1,0 +1,15 @@
+﻿{
+  "Name": "See Plans And Prices Button",
+  "Description": "Button next to the hero ZIP input that starts the plan finder",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "i6VC8Tuq8U2ehdAaaidUhA",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/i6VC8Tuq8U2ehdAaaidUhA",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:56:42.1084747Z",
+  "Updated": "2026-11-13T19:56:42.1084747Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

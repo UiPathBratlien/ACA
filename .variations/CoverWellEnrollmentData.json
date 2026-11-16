@@ -1,0 +1,44 @@
+[
+  {
+    "in_Scenario": "Silver plan, household of 2",
+    "in_ZipCode": "30301",
+    "in_HouseholdSizeItem": "2 people",
+    "in_HouseholdSize": "2",
+    "in_ApplicantAge": "40",
+    "in_AnnualIncome": "45000",
+    "in_PlanTier": "Silver",
+    "in_PlanName": "Northwind Health Silver Plus",
+    "in_FirstName": "Jordan",
+    "in_LastName": "Rivera",
+    "in_DobDisplayed": "01/15/1990",
+    "in_DobIso": "1990-01-15"
+  },
+  {
+    "in_Scenario": "Gold plan, single applicant",
+    "in_ZipCode": "94110",
+    "in_HouseholdSizeItem": "1 person",
+    "in_HouseholdSize": "1",
+    "in_ApplicantAge": "30",
+    "in_AnnualIncome": "30000",
+    "in_PlanTier": "Gold",
+    "in_PlanName": "BlueRiver Care Gold Choice",
+    "in_FirstName": "Avery",
+    "in_LastName": "Chen",
+    "in_DobDisplayed": "07/04/1994",
+    "in_DobIso": "1994-07-04"
+  },
+  {
+    "in_Scenario": "Bronze plan, high income with no savings",
+    "in_ZipCode": "10001",
+    "in_HouseholdSizeItem": "1 person",
+    "in_HouseholdSize": "1",
+    "in_ApplicantAge": "55",
+    "in_AnnualIncome": "200000",
+    "in_PlanTier": "Bronze",
+    "in_PlanName": "Summit Mutual Bronze Select",
+    "in_FirstName": "Morgan",
+    "in_LastName": "Lee",
+    "in_DobDisplayed": "11/30/1970",
+    "in_DobIso": "1970-11-30"
+  }
+]

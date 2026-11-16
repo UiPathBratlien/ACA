@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Savings Amount Text",
+  "Description": "Estimated monthly premium credit amount shown on the Savings step",
+  "Type": "Element",
+  "TaxonomyType": "Label",
+  "Id": "nhI0h5YCMk65y11ng0MW6g",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/nhI0h5YCMk65y11ng0MW6g",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:58:46.1533785Z",
+  "Updated": "2026-11-13T19:58:46.1533785Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

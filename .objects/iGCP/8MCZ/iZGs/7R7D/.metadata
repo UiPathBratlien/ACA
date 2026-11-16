@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Confirm Accuracy Checkbox",
+  "Description": "Checkbox confirming the information is accurate on the Enroll form",
+  "Type": "Element",
+  "TaxonomyType": "Checkbox",
+  "Id": "7R7DyxDwtUWWqhgvlmjKfw",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/7R7DyxDwtUWWqhgvlmjKfw",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T20:01:14.7142742Z",
+  "Updated": "2026-11-13T20:01:14.7142742Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

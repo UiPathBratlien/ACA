@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CoverWell Admin</title>
+<style>
+  :root { --brand:#0b4f8a; --bg:#fff; --bg-alt:#f1f5f9; --text:#1b2733; --muted:#5a6b7b; --border:#d3dce6; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0f1720; --bg-alt:#16212c; --text:#e6edf3; --muted:#9fb0c0; --border:#2a3a4a; --brand:#4b9be0; } }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:"Segoe UI",system-ui,sans-serif; background:var(--bg); color:var(--text); }
+  .wrap { max-width:1300px; margin:0 auto; padding:16px; }
+  header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; border-bottom:1px solid var(--border); padding-bottom:12px; }
+  h1 { margin:0; font-size:22px; color:var(--brand); }
+  .toolbar { display:flex; gap:8px; flex-wrap:wrap; margin:16px 0; }
+  input { padding:8px 10px; font-size:15px; border:1px solid var(--border); border-radius:6px; background:var(--bg); color:var(--text); }
+  button, a.btn { padding:8px 14px; font-size:15px; border-radius:6px; border:1px solid var(--brand); background:var(--brand); color:#fff; cursor:pointer; text-decoration:none; }
+  button.secondary { background:transparent; color:var(--brand); }
+  button.danger { background:#c62828; border-color:#c62828; }
+  .table-wrap { overflow-x:auto; border:1px solid var(--border); border-radius:8px; }
+  table { border-collapse:collapse; width:100%; font-size:14px; }
+  th, td { padding:8px 10px; border-bottom:1px solid var(--border); text-align:left; white-space:nowrap; }
+  th { background:var(--bg-alt); position:sticky; top:0; }
+  td.num { text-align:right; font-variant-numeric:tabular-nums; }
+  #status { color:var(--muted); }
+  .empty { padding:24px; text-align:center; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>CoverWell &mdash; Enrollment records</h1>
+    <a class="btn" href="index.html" id="admin-site-link">Back to site</a>
+  </header>
+
+  <div class="toolbar">
+    <input id="admin-search" placeholder="Search name, email or confirmation #" size="34">
+    <button id="admin-refresh" class="secondary">Refresh</button>
+    <button id="admin-export" class="secondary">Export CSV</button>
+    <button id="admin-clear" class="danger">Delete all</button>
+    <span id="status"></span>
+  </div>
+
+  <div class="table-wrap">
+    <table id="enrollments-table">
+      <thead><tr>
+        <th>Confirmation #</th><th>Submitted (UTC)</th><th>Status</th><th>First</th><th>Last</th><th>DOB</th>
+        <th>Email</th><th>ZIP</th><th>Household</th><th>Income</th><th>Plan</th><th>Tier</th>
+        <th>Premium/mo</th><th>Credit/mo</th><th></th>
+      </tr></thead>
+      <tbody id="enrollments-body"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+let rows = [];
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money = n => n == null ? "" : "$" + Number(n).toLocaleString();
+
+async function load() {
+  $("status").textContent = "Loading…";
+  try {
+    const r = await fetch("/api/enrollments");
+    rows = (await r.json()).enrollments;
+    render();
+  } catch {
+    $("status").textContent = "Can't reach the server. Start it with: python server.py";
+  }
+}
+function render() {
+  const q = $("admin-search").value.trim().toLowerCase();
+  const list = rows.filter(r => !q || [r.confirmation, r.first_name, r.last_name, r.email].join(" ").toLowerCase().includes(q));
+  $("status").textContent = `${list.length} of ${rows.length} record(s)`;
+  $("enrollments-body").innerHTML = list.length ? list.map(r => `
+    <tr data-confirmation="${esc(r.confirmation)}">
+      <td>${esc(r.confirmation)}</td><td>${esc(r.created_at)}</td><td>${esc(r.status)}</td>
+      <td>${esc(r.first_name)}</td><td>${esc(r.last_name)}</td><td>${esc(r.dob)}</td>
+      <td>${esc(r.email)}</td><td>${esc(r.zip)}</td><td class="num">${esc(r.household_size)}</td>
+      <td class="num">${money(r.income)}</td><td>${esc(r.plan_name)}</td><td>${esc(r.plan_tier)}</td>
+      <td class="num">${money(r.monthly_premium)}</td><td class="num">${money(r.monthly_credit)}</td>
+      <td><button class="secondary del" data-c="${esc(r.confirmation)}">Delete</button></td>
+    </tr>`).join("") : `<tr><td colspan="15" class="empty">No enrollments yet.</td></tr>`;
+}
+$("admin-search").addEventListener("input", render);
+$("admin-refresh").addEventListener("click", load);
+$("admin-clear").addEventListener("click", async () => {
+  if (!confirm("Delete ALL enrollment records?")) return;
+  await fetch("/api/enrollments", { method: "DELETE" }); load();
+});
+$("enrollments-body").addEventListener("click", async e => {
+  const b = e.target.closest(".del"); if (!b) return;
+  await fetch("/api/enrollments/" + encodeURIComponent(b.dataset.c), { method: "DELETE" }); load();
+});
+$("admin-export").addEventListener("click", () => {
+  if (!rows.length) return;
+  const cols = Object.keys(rows[0]);
+  const csv = [cols.join(","), ...rows.map(r => cols.map(c => `"${String(r[c] ?? "").replace(/"/g, '""')}"`).join(","))].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" }));
+  a.download = "enrollments.csv"; a.click();
+});
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+﻿{
+  "Name": "View Plans Button",
+  "Description": "Button on the Savings step that opens the plan list",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "y8wHyC2FfUmkkulXyAD_2g",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/y8wHyC2FfUmkkulXyAD_2g",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:58:46.2169637Z",
+  "Updated": "2026-11-13T19:58:46.2169637Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

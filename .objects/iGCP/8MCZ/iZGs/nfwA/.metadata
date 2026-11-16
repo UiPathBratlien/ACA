@@ -1,0 +1,18 @@
+﻿{
+  "Name": "Select Plan By Name Button",
+  "Description": "Select plan button on the plan card whose plan name is passed in as in_PlanName, in the plan list",
+  "Type": "Element",
+  "TaxonomyType": "Button",
+  "Id": "nfwA9RDCTkqlLW7cWAfpyw",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/nfwA9RDCTkqlLW7cWAfpyw",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T20:00:02.6237555Z",
+  "Updated": "2026-11-13T20:31:13.8609541Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ],
+  "UpdatedBy": [
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

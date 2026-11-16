@@ -1,0 +1,15 @@
+﻿{
+  "Name": "Household Size Dropdown",
+  "Description": "Household size select list on the About you step",
+  "Type": "Element",
+  "TaxonomyType": "Dropdown",
+  "Id": "d-yPL0h6MkCc6TGva4SoIQ",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/d-yPL0h6MkCc6TGva4SoIQ",
+  "ParentRef": "4n5i6Eu17US6otms_UCjMQ/iZGsB9u29U6DxuuCDLDceA",
+  "Created": "2026-11-13T19:57:47.504643Z",
+  "Updated": "2026-11-13T19:57:47.504643Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}

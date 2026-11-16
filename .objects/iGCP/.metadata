@@ -1,0 +1,13 @@
+﻿{
+  "Name": "CoverWell Marketplace",
+  "Description": "CoverWell demo health insurance marketplace web app served locally on localhost:8080",
+  "Type": "App",
+  "Id": "iGCP0dyw4UuyFV1Eyi_Mcw",
+  "Reference": "4n5i6Eu17US6otms_UCjMQ/iGCP0dyw4UuyFV1Eyi_Mcw",
+  "Created": "2026-11-13T19:55:58.784438Z",
+  "Updated": "2026-11-13T19:55:58.784438Z",
+  "CreatedBy": [
+    "UiPath.UIAutomationCore, Version=26.10.8.0, Culture=neutral, PublicKeyToken=null",
+    "UiPath.Platform, Version=26.4.0.0, Culture=neutral, PublicKeyToken=null"
+  ]
+}
